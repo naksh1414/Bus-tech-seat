@@ -13,8 +13,8 @@ export class SeatService {
   async updateSeatStatus(
     busId: string,
     seatNumber: string,
-    status: 'free' | 'booked',
-    color: 'green' | 'yellow' | 'red'
+    status: 'FREE' | 'BOOKED',
+    color: 'GREEN' | 'YELLOW' | 'RED'
   ): Promise<ISeat | null> {
     return await Seat.findOneAndUpdate(
       { busId, seatNumber },
@@ -24,13 +24,16 @@ export class SeatService {
   }
 
   async bulkCreateSeats(busId: string, seatCount: number): Promise<ISeat[]> {
-    const seats = Array.from({ length: seatCount }, (_, index) => ({
+    const existingSeats = await Seat.find({ busId });
+    const existingSeatCount = existingSeats.length;
+    
+    const newSeats = Array.from({ length: seatCount }, (_, index) => ({
       busId,
-      seatNumber: (index + 1).toString(),
-      status: 'free',
-      color: 'green'
+      seatNumber: (existingSeatCount + index + 1).toString(),
+      status: 'BOOKED',
+      color: 'RED'
     }));
 
-    return await Seat.insertMany(seats);
+    return await Seat.insertMany(newSeats);
   }
 }

@@ -3,8 +3,8 @@ import mongoose, { Document, Schema } from 'mongoose';
 export interface ISeat extends Document {
   busId: string;
   seatNumber: string;
-  status: 'free' | 'booked';
-  color: 'green' | 'yellow' | 'red';
+  status: 'FREE' | 'BOOKED';
+  color: 'GREEN' | 'YELLOW' | 'RED';
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,13 +21,13 @@ const seatSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['free', 'booked'],
-    default: 'free'
+    enum: ['FREE', 'BOOKED'],
+    default: 'FREE'
   },
   color: {
     type: String,
-    enum: ['green', 'yellow', 'red'],
-    default: 'green'
+    enum: ['GREEN', 'YELLOW', 'RED'],
+    default: 'GREEN'
   }
 }, {
   timestamps: true

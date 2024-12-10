@@ -5,9 +5,10 @@ import { authenticateToken } from "../middlewares/auth";
 const router = Router();
 const seatController = new SeatController();
 
-router.use(authenticateToken);
+// router.use(authenticateToken);
 
 router.post("/seats", (req, res) => seatController.createSeat(req, res));
+
 router.get("/seats/bus/:busId",(req, res) =>
   seatController.getSeatsByBusId(req, res)
 );
